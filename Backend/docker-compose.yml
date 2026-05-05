@@ -1,0 +1,51 @@
+version: "3.8"
+
+services:
+
+  backend:
+    build: .
+    container_name: ims_backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+    depends_on:
+      - postgres
+      - mongo
+      - redis
+    environment:
+      - DATABASE_URL=postgresql://postgres:password@postgres:5432/ims_db
+
+  postgres:
+    image: postgres:15
+    container_name: ims_postgres
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: ims_db
+    ports:
+      - "5432:5432"
+
+  mongo:
+    image: mongo:6
+    container_name: ims_mongo
+    ports:
+      - "27017:27017"
+
+  redis:
+    image: redis:7
+    container_name: ims_redis
+    ports:
+      - "6379:6379"
+
+  frontend:
+    build: ../Frontend
+    container_name: ims_frontend
+    ports:
+      - "5173:5173"
+    volumes:
+      - ../Frontend:/app
+      - /app/node_modules
+    depends_on:
+      - backend

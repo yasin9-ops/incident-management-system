@@ -1,0 +1,14 @@
+[
+    {
+        "component_id": "CACHE_01",
+        "severity": "P2",
+        "message": "Cache latency high",
+        "timestamp": "2026-05-04T10:00:00"
+    },
+    {
+        "component_id": "DB_01",
+        "severity": "P0",
+        "message": "Database connection failure",
+        "timestamp": "2026-05-04T10:01:00"
+    }
+]
